@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Text Direction Toggler",
+  "name": "Web Page Direction Toggler",
   "version": "1.0",
-  "description": "Toggle text direction between left-to-right and right-to-left",
+  "description": "Toggle HTML direction between left-to-right and right-to-left",
   "action": {
     "default_icon": "icon.png"
   },
