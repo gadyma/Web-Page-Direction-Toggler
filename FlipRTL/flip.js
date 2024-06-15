@@ -9,9 +9,19 @@ function toggleTextDirection() {
     }
 
     const activeTab = tabs[0];
-    
-    const cssCode = isRTL ? 'html { direction: ltr; }' : 'html { direction: rtl; }';
-    
+    let cssCode;
+
+    // Check if the current tab is on the https://app.smartsuite.com site
+    if (activeTab.url.includes('https://app.smartsuite.com')) {
+      // Apply the CSS rule for .ProseMirror and .edit-record-field
+      cssCode = isRTL
+        ? '.ProseMirror, .edit-record-field, .text-field-control { direction: ltr; }'
+        : '.ProseMirror, .edit-record-field, .text-field-control { direction: rtl; }';
+    } else {
+      // Apply the CSS rule for html
+      cssCode = isRTL ? 'html { direction: ltr; }' : 'html { direction: rtl; }';
+    }
+
     chrome.scripting.insertCSS({
       target: { tabId: activeTab.id },
       css: cssCode
