@@ -1,0 +1,26 @@
+# Privacy Policy
+
+## Introduction
+
+Thank you for using Web Page Direction Toggler! This extension allows users to toggle the text direction of any webpage between left-to-right (LTR) and right-to-left (RTL). We value your privacy and are committed to protecting your personal information.
+
+## Data Collection
+
+We do not collect, store, or transmit any personal data from users of this extension. The extension operates entirely within your browser and does not communicate with any external servers.
+
+## Permissions
+
+The extension requires certain permissions to function correctly:
+- **activeTab**: Allows the extension to interact with the currently active tab when the user clicks the extension icon. This is necessary to toggle the text direction of the active webpage.
+- **scripting**: Allows the extension to inject CSS styles into the active tab's webpage. This is crucial for changing the text direction of the content displayed on the page.
+
+These permissions are solely used for the functionality of the extension and do not result in any data collection.
+
+## Changes to This Policy
+
+We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.
+
+## Contact Us
+
+If you have any questions about this Privacy Policy, please contact us at textdirection @margalit.org.
+Last updated: 15 June 2024
