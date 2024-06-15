@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Text Direction Toggler",
+  "version": "1.0",
+  "description": "Toggle text direction between left-to-right and right-to-left",
+  "action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": ["activeTab", "scripting"],
+  "background": {
+    "service_worker": "flip.js"
+  }
+}
