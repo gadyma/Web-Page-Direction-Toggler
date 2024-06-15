@@ -2,7 +2,26 @@ Description:
 Easily flip the text direction of any webpage to enhance the readability of mixed Hebrew and English content. The Text Direction Toggler is perfect for websites that do not natively support RTL (right-to-left) languages, allowing you to switch between left-to-right (LTR) and right-to-left (RTL) text directions with a single click.
 
 Key Features:
-Seamless Text Direction Switching: Instantly toggle between LTR and RTL text directions to improve the display of bilingual content.
+Seamless Web Page Direction Switching: Instantly toggle between LTR and RTL text directions to improve the display of bilingual content.
 User-Friendly: Simple and intuitive – just click the extension icon to switch text directions on any webpage.
 Universal Compatibility: Works on all websites, ensuring better readability for RTL languages like Hebrew on sites that default to LTR.
 Whether you are reading, writing, or navigating content in mixed Hebrew and English, the Text Direction Toggler makes it easier and clearer to view and manage your text. Enhance your browsing experience today!
+
+
+
+
+Single purpose
+The 'Web Page Direction Toggler' extension allows users to easily switch the text direction of any webpage between left-to-right (LTR) and right-to-left (RTL) with a single click. This is particularly useful for users who read and write in languages that use different text directions, such as Hebrew and English.
+
+
+Permission justification
+
+
+The Active tab permission is necessary for the extension to interact with the currently active tab when the user clicks the extension icon. This is essential for toggling the text direction of the active webpage between left-to-right (LTR) and right-to-left (RTL). Without this permission, the extension cannot determine or modify the content of the active tab.
+
+The scripting permission is required to inject CSS styles directly into the active tab's webpage. This functionality is crucial for changing the text direction of the content displayed on the page, allowing users to switch between LTR and RTL text directions as needed.
+
+
+Privacy Policy
+https://github.com/gadyma/Web-Page-Direction-Toggler/blob/main/Privacy%20Policy
+textdirection@margalit.org
