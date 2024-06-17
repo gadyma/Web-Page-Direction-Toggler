@@ -15,8 +15,9 @@ function toggleTextDirection() {
     if (activeTab.url.includes('https://app.smartsuite.com')) {
       // Apply the CSS rule for .ProseMirror and .edit-record-field
       cssCode = isRTL
-        ? '.ProseMirror, .edit-record-field, .text-field-control { direction: ltr; }'
-        : '.ProseMirror, .edit-record-field, .text-field-control { direction: rtl; }';
+        ? '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell {direction: ltr;}'
+        //grid-view-row__cell 
+        : '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell {direction: rtl;}';
     } else {
       // Apply the CSS rule for html
       cssCode = isRTL ? 'html { direction: ltr; }' : 'html { direction: rtl; }';
