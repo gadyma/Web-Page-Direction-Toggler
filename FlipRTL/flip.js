@@ -16,11 +16,17 @@ function toggleTextDirection() {
       // Apply the CSS rule for .ProseMirror and .edit-record-field
       cssCode = isRTL
         ? '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell {direction: ltr;}'
-        //grid-view-row__cell 
         : '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell {direction: rtl;}';
+    } else if (activeTab.url.includes('https://app.slack.com/')) {
+        // Apply the CSS rule for .p-rich_text_block
+        cssCode = isRTL
+        ? '.p-rich_text_block {direction: ltr;}'
+        : '.p-rich_text_block {direction: rtl;}';
     } else {
       // Apply the CSS rule for html
-      cssCode = isRTL ? 'html { direction: ltr; }' : 'html { direction: rtl; }';
+      cssCode = isRTL 
+        ? 'html, h1, h2, h3, h4, h5, h6, div, p {direction: ltr;}' 
+        : 'html, h1, h2, h3, h4, h5, h6, div, p {direction: rtl;}';
     }
 
     chrome.scripting.insertCSS({
@@ -38,3 +44,4 @@ function toggleTextDirection() {
 }
 
 chrome.action.onClicked.addListener(toggleTextDirection);
+
