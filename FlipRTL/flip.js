@@ -1,47 +1,126 @@
-let isRTL = false;
+const States = {
+  NOT_TOUCHED: 0,
+  LTR: 1,
+  RTL: 2
+};
 
-function toggleTextDirection() {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (tabs.length === 0) {
-      console.error('No active tab found.');
-      alert('No active tab found.');
-      return;
+let tabStates = {};
+
+function getNextState(currentState) {
+  switch (currentState) {
+    case States.NOT_TOUCHED:
+      return States.RTL;
+    case States.RTL:
+      return States.LTR;
+    case States.LTR:
+      return States.NOT_TOUCHED;
+    default:
+      return States.NOT_TOUCHED;
+  }
+}
+
+function updateIcon(tabId) {
+  chrome.tabs.get(tabId, (tab) => {
+    const state = tabStates[tabId] || States.NOT_TOUCHED;
+    let iconPath;
+    switch (state) {
+      case States.RTL:
+        iconPath = 'icon_rtl.png';
+        break;
+      case States.LTR:
+        iconPath = 'icon_ltr.png';
+        break;
+      default:
+        iconPath = 'icon.png';
     }
-
-    const activeTab = tabs[0];
-    let cssCode;
-
-    // Check if the current tab is on the https://app.smartsuite.com site
-    if (activeTab.url.includes('https://app.smartsuite.com')) {
-      // Apply the CSS rule for .ProseMirror and .edit-record-field
-      cssCode = isRTL
-        ? '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell {direction: ltr;}'
-        : '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell {direction: rtl;}';
-    } else if (activeTab.url.includes('https://app.slack.com/')) {
-        // Apply the CSS rule for .p-rich_text_block
-        cssCode = isRTL
-        ? '.p-rich_text_block {direction: ltr;}'
-        : '.p-rich_text_block {direction: rtl;}';
-    } else {
-      // Apply the CSS rule for html
-      cssCode = isRTL 
-        ? 'html, h1, h2, h3, h4, h5, h6, div, p {direction: ltr;}' 
-        : 'html, h1, h2, h3, h4, h5, h6, div, p {direction: rtl;}';
-    }
-
-    chrome.scripting.insertCSS({
-      target: { tabId: activeTab.id },
-      css: cssCode
-    }, () => {
-      if (chrome.runtime.lastError) {
-        console.error(`Error inserting CSS: ${chrome.runtime.lastError.message}`);
-        alert(`Error inserting CSS: ${chrome.runtime.lastError.message}`);
-      } else {
-        isRTL = !isRTL;
-      }
-    });
+    chrome.action.setIcon({ path: iconPath, tabId: tabId });
   });
 }
 
-chrome.action.onClicked.addListener(toggleTextDirection);
+function toggleTextDirection(tabId) {
+  chrome.tabs.get(tabId, (tab) => {
+    const currentState = tabStates[tabId] || States.NOT_TOUCHED;
+    const newState = getNextState(currentState);
+    tabStates[tabId] = newState;
 
+    let cssCode;
+    if (tab.url.includes('https://app.smartsuite.com')) {
+      cssCode = getCSSForSmartSuite(newState);
+    } else if (tab.url.includes('https://app.slack.com/')) {
+      cssCode = getCSSForSlack(newState);
+    } else {
+      cssCode = getCSSForGeneral(newState);
+    }
+
+    if (newState === States.NOT_TOUCHED) {
+      chrome.scripting.removeCSS({
+        target: { tabId: tabId },
+        css: cssCode
+      }, () => {
+        if (chrome.runtime.lastError) {
+          console.error(`Error removing CSS: ${chrome.runtime.lastError.message}`);
+        } else {
+          updateIcon(tabId);
+        }
+      });
+    } else {
+      chrome.scripting.insertCSS({
+        target: { tabId: tabId },
+        css: cssCode
+      }, () => {
+        if (chrome.runtime.lastError) {
+          console.error(`Error inserting CSS: ${chrome.runtime.lastError.message}`);
+        } else {
+          updateIcon(tabId);
+        }
+      });
+    }
+  });
+}
+
+function getCSSForSmartSuite(state) {
+  switch (state) {
+    case States.RTL:
+      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell {direction: rtl;}';
+    case States.LTR:
+      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell {direction: ltr;}';
+    default:
+      return '';
+  }
+}
+
+function getCSSForSlack(state) {
+  switch (state) {
+    case States.RTL:
+      return '.p-rich_text_block {direction: rtl;}';
+    case States.LTR:
+      return '.p-rich_text_block {direction: ltr;}';
+    default:
+      return '';
+  }
+}
+
+function getCSSForGeneral(state) {
+  switch (state) {
+    case States.RTL:
+      return 'html, h1, h2, h3, h4, h5, h6, div {direction: rtl;}';
+    case States.LTR:
+      return 'html, h1, h2, h3, h4, h5, h6, div {direction: ltr;}';
+    default:
+      return '';
+  }
+}
+
+chrome.action.onClicked.addListener((tab) => {
+  toggleTextDirection(tab.id);
+});
+
+chrome.tabs.onActivated.addListener((activeInfo) => {
+  updateIcon(activeInfo.tabId);
+});
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete') {
+    updateIcon(tabId);
+  }
+});
