@@ -39,6 +39,21 @@ function updateIcon(tabId) {
 
 function toggleTextDirection(tabId) {
   chrome.tabs.get(tabId, (tab) => {
+    if (chrome.runtime.lastError) {
+      console.error(`Error getting tab: ${chrome.runtime.lastError.message}`);
+      return;
+    }
+
+    // Check for chrome:// URLs
+    if (tab.url.startsWith('chrome://')) {
+      if (tab.url.startsWith('chrome://extensions')) {
+        console.log('Cannot inject CSS into the extensions gallery.');
+      } else {
+        console.log('Cannot modify chrome:// pages');
+      }
+      return;
+    }
+
     const currentState = tabStates[tabId] || States.NOT_TOUCHED;
     const newState = getNextState(currentState);
     tabStates[tabId] = newState;
