@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Web Page Direction Toggler",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "Toggle HTML direction between left-to-right and right-to-left with Smartsuite support",
   "icons": {
     "16": "icon16.png",
@@ -13,9 +13,10 @@
     "default_icon": {
       "16": "icon_ltr.png",
       "32": "icon_ltr.png"
-    }
+    },
+    "default_pinned": true
   },
-  "permissions": ["activeTab", "scripting", "storage", "tabs"],
+  "permissions": ["activeTab", "scripting",  "tabs"],
   "background": {
     "service_worker": "flip.js"
   }
