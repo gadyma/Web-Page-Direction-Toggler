@@ -118,7 +118,7 @@ function getCSSForSlack(state) {
 function getCSSForGeneral(state) {
   switch (state) {
     case States.RTL:
-      return 'html, h1, h2, h3, h4, h5, h6, div {direction: rtl;}';
+      return 'html, h1, h2, h3, h4, h5, h6, div {direction: rtl; TEXT-ALIGN: RIGHT;}';
     case States.LTR:
       return 'html, h1, h2, h3, h4, h5, h6, div {direction: ltr;}';
     default:
