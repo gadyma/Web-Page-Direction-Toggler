@@ -96,9 +96,9 @@ function toggleTextDirection(tabId) {
 function getCSSForSmartSuite(state) {
   switch (state) {
     case States.RTL:
-      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell {direction: rtl;}';
+      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .ScrollbarsCustom-Content {direction: rtl;}';
     case States.LTR:
-      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell {direction: ltr;}';
+      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .ScrollbarsCustom-Content {direction: ltr;}';
     default:
       return '';
   }
