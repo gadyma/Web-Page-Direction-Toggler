@@ -63,6 +63,8 @@ function toggleTextDirection(tabId) {
       cssCode = getCSSForSmartSuite(newState);
     } else if (tab.url.includes('https://app.slack.com/')) {
       cssCode = getCSSForSlack(newState);
+    } else if (tab.url.includes('monday.com')) {
+      cssCode = getCSSForMonday(newState);
     } else {
       cssCode = getCSSForGeneral(newState);
     }
@@ -97,6 +99,7 @@ function getCSSForSmartSuite(state) {
   switch (state) {
     case States.RTL:
       return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section .select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis {direction: rtl;}'; //.field-type-option-list__options {direction: ltr;}
+      
     case States.LTR:
       return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section, select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis {direction: ltr;}'; // not .input-field 
     default:
@@ -114,6 +117,18 @@ function getCSSForSlack(state) {
       return '';
   }
 }
+
+function getCSSForMonday(state) {
+  switch (state) {
+    case States.RTL:
+      return '.ds-text-component, ds-text-component, .nameCellContainer--Ko8f5, .name-cell-text, .longTextField--2GUam, .clickable_b19a9b7640, .headingComponent---BEf8.multiLineEllipsis--6SsD1  {direction: rtl; text-align: justify;}';
+    case States.LTR:
+      return '.ds-text-component, ds-text-component, .nameCellContainer--Ko8f5, .name-cell-text, .longTextField--2GUam, .clickable_b19a9b7640, .headingComponent---BEf8.multiLineEllipsis--6SsD1  {direction: ltr; text-align: justify;}';
+    default:
+      return '';
+  }
+}
+
 
 function getCSSForGeneral(state) {
   switch (state) {
