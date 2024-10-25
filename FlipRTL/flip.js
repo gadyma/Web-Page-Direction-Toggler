@@ -1,6 +1,6 @@
 const States = {
-  NOT_TOUCHED: 0,
-  LTR: 1,
+  NOT_TOUCHED: 1,
+  LTR: 0,
   RTL: 2
 };
 
@@ -11,8 +11,6 @@ function getNextState(currentState) {
     case States.NOT_TOUCHED:
       return States.RTL;
     case States.RTL:
-      return States.LTR;
-    case States.LTR:
       return States.NOT_TOUCHED;
     default:
       return States.NOT_TOUCHED;
@@ -27,9 +25,9 @@ function updateIcon(tabId) {
       case States.RTL:
         iconPath = 'icon_rtl.png';
         break;
-      case States.LTR:
-        iconPath = 'icon_ltr.png';
-        break;
+      //case States.LTR:
+      //  iconPath = 'icon_ltr.png';
+      //  break;
       default:
         iconPath = 'icon.png';
     }
@@ -96,49 +94,32 @@ function toggleTextDirection(tabId) {
 }
 
 function getCSSForSmartSuite(state) {
+      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section .select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis {direction: rtl;} .align-left {text-align: Right}'; //.field-type-option-list__options {direction: ltr;}
+}
+
+function getCSSForSmartSuiteOLD(state) {
   switch (state) {
     case States.RTL:
-      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section .select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis {direction: rtl;}'; //.field-type-option-list__options {direction: ltr;}
+      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section .select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis {direction: rtl;} .align-left {text-align: Right}'; //.field-type-option-list__options {direction: ltr;}
       
     case States.LTR:
-      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section, select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis {direction: ltr;}'; // not .input-field 
+      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section, select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis {direction: ltr;} .align-left {text-align: left}'; // not .input-field 
     default:
       return '';
   }
 }
 
 function getCSSForSlack(state) {
-  switch (state) {
-    case States.RTL:
-      return '.p-rich_text_block {direction: rtl;}';
-    case States.LTR:
-      return '.p-rich_text_block {direction: ltr;}';
-    default:
-      return '';
-  }
+      return '.p-rich_text_block, .c-message_kit__indent {direction: rtl;}';
 }
 
 function getCSSForMonday(state) {
-  switch (state) {
-    case States.RTL:
       return '.ds-text-component, ds-text-component, .nameCellContainer--Ko8f5, .name-cell-text, .longTextField--2GUam, .clickable_b19a9b7640, .headingComponent---BEf8.multiLineEllipsis--6SsD1  {direction: rtl; text-align: justify;}';
-    case States.LTR:
-      return '.ds-text-component, ds-text-component, .nameCellContainer--Ko8f5, .name-cell-text, .longTextField--2GUam, .clickable_b19a9b7640, .headingComponent---BEf8.multiLineEllipsis--6SsD1  {direction: ltr; text-align: justify;}';
-    default:
-      return '';
-  }
 }
 
 
 function getCSSForGeneral(state) {
-  switch (state) {
-    case States.RTL:
       return 'html, h1, h2, h3, h4, h5, h6, div {direction: rtl; TEXT-ALIGN: RIGHT;}';
-    case States.LTR:
-      return 'html, h1, h2, h3, h4, h5, h6, div {direction: ltr;}';
-    default:
-      return '';
-  }
 }
 
 chrome.action.onClicked.addListener((tab) => {
