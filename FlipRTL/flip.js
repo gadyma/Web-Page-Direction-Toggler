@@ -1,3 +1,9 @@
+chrome.runtime.onInstalled.addListener(() => {
+  const manifest = chrome.runtime.getManifest();
+  const title = `${manifest.name} v${manifest.version}`;
+  chrome.action.setTitle({ title: title });
+});
+
 const States = {
   NOT_TOUCHED: 1,
   LTR: 0,
