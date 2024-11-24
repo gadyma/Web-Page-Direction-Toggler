@@ -100,20 +100,9 @@ function toggleTextDirection(tabId) {
 }
 
 function getCSSForSmartSuite(state) {
-      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section .select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis, rct-sidebar-row {direction: rtl;} .align-left , .rct-sidebar-row {text-align: Right}'; //.field-type-option-list__options {direction: ltr;}
+      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section .select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis, rct-sidebar-row {direction: rtl;} .align-left , .linked-record-field-control, .rct-sidebar-row {text-align: Right;direction: rtl;} '; //.field-type-option-list__options {direction: ltr;}
 }
 
-function getCSSForSmartSuiteOLD(state) {
-  switch (state) {
-    case States.RTL:
-      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section .select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis {direction: rtl;} .align-left {text-align: Right}'; //.field-type-option-list__options {direction: ltr;}
-      
-    case States.LTR:
-      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section, select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis {direction: ltr;} .align-left {text-align: left}'; // not .input-field 
-    default:
-      return '';
-  }
-}
 
 function getCSSForSlack(state) {
       return '.p-rich_text_block, .c-message_kit__indent {direction: rtl;}';
