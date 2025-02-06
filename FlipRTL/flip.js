@@ -5,8 +5,8 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 const States = {
-  NOT_TOUCHED: 1,
-  LTR: 0,
+  NOT_TOUCHED: 0,
+  LTR: 1,
   RTL: 2
 };
 
@@ -17,9 +17,9 @@ function getNextState(currentState) {
     case States.NOT_TOUCHED:
       return States.RTL;
     case States.RTL:
-      return States.NOT_TOUCHED;
+      return States.LTR;
     default:
-      return States.NOT_TOUCHED;
+      return States.RTL;
   }
 }
 
@@ -31,9 +31,9 @@ function updateIcon(tabId) {
       case States.RTL:
         iconPath = 'icon_rtl.png';
         break;
-      //case States.LTR:
-      //  iconPath = 'icon_ltr.png';
-      //  break;
+      case States.LTR:
+        iconPath = 'icon_ltr.png';
+        break;
       default:
         iconPath = 'icon.png';
     }
@@ -100,7 +100,12 @@ function toggleTextDirection(tabId) {
 }
 
 function getCSSForSmartSuite(state) {
-      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section .select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis, rct-sidebar-row {direction: rtl;} .align-left , .linked-record-field-control, .rct-sidebar-row {text-align: Right;direction: rtl;} '; //.field-type-option-list__options {direction: ltr;}
+  switch (state) {
+    case States.RTL:
+      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section .select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis, rct-sidebar-row, .ellipsis {direction: rtl;} .align-left , .linked-record-field-control, .rct-sidebar-row {text-align: Right;direction: rtl;}';
+    default:
+      return '.ProseMirror, .edit-record-field, .text-field-control, single-select-control, .grid-view-cell, .record-modal-title__title, .record-list__scrollbar-body, .record-field-section .select-list-items__in, .record-layout-item, .r-textarea, .text--ellipsis, rct-sidebar-row, .ellipsis {direction: ltr;} .align-left , .linked-record-field-control, .rct-sidebar-row {text-align: Left;direction: ltr;}';
+    }
 }
 
 
