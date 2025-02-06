@@ -110,16 +110,31 @@ function getCSSForSmartSuite(state) {
 
 
 function getCSSForSlack(state) {
-      return '.p-rich_text_block, .c-message_kit__indent {direction: rtl;}';
+  switch (state) {
+    case States.RTL:
+        return '.p-rich_text_block, .c-message_kit__indent {direction: rtl;}';
+    default:
+      return '.p-rich_text_block, .c-message_kit__indent {direction: ltr;}';
+  }
 }
 
 function getCSSForMonday(state) {
-      return '.ds-text-component, ds-text-component, .nameCellContainer--Ko8f5, .name-cell-text, .longTextField--2GUam, .clickable_b19a9b7640, .headingComponent---BEf8.multiLineEllipsis--6SsD1  {direction: rtl; text-align: justify;} #tooltips-container {direction: rtl;}';
+  switch (state) {
+    case States.RTL:
+        return '.ds-text-component, ds-text-component, .nameCellContainer--Ko8f5, .name-cell-text, .longTextField--2GUam, .clickable_b19a9b7640, .headingComponent---BEf8.multiLineEllipsis--6SsD1  {direction: rtl; text-align: justify;} #tooltips-container {direction: rtl;}';
+    default:
+        return '.ds-text-component, ds-text-component, .nameCellContainer--Ko8f5, .name-cell-text, .longTextField--2GUam, .clickable_b19a9b7640, .headingComponent---BEf8.multiLineEllipsis--6SsD1  {direction: rtl; text-align: justify;} #tooltips-container {direction: ltr;}';
+  }
 }
 
 
 function getCSSForGeneral(state) {
-      return 'html, h1, h2, h3, h4, h5, h6, div {direction: rtl; TEXT-ALIGN: RIGHT;}';
+  switch (state) {
+    case States.RTL:
+        return 'html, h1, h2, h3, h4, h5, h6, div {direction: rtl; TEXT-ALIGN: RIGHT;}';
+    default:
+        return 'html, h1, h2, h3, h4, h5, h6, div {direction: rtl; TEXT-ALIGN: RIGHT;}';
+  }
 }
 
 chrome.action.onClicked.addListener((tab) => {
